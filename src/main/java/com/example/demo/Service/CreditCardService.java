@@ -30,18 +30,18 @@ public class CreditCardService {
 	@Autowired
 	CompteRepository compteRepository;
 
-	@Produces(MediaType.TEXT_PLAIN)
-	@RequestMapping(path ="/auth/{p_email}/{p_pass}", method = RequestMethod.GET)
-	//public boolean authentification(@RequestParam(name = "email", required = false) String  p_email,@RequestParam(name = "pass", required = false) String  pass) {
-	public boolean authentification(@PathVariable String p_email, @PathVariable String p_pass) {	
-		System.out.println(p_pass);
-		Compte cp = compteRepository.findCompte(p_email,p_pass);
-		if(cp!=null) {
-			return true;
-		}else {
-			return false;
-		}	
-	}
+//	@Produces(MediaType.TEXT_PLAIN)
+//	@RequestMapping(path ="/auth/{p_email}/{p_pass}", method = RequestMethod.GET)
+//	//public boolean authentification(@RequestParam(name = "email", required = false) String  p_email,@RequestParam(name = "pass", required = false) String  pass) {
+//	public boolean authentification(@PathVariable String p_email, @PathVariable String p_pass) {	
+//		System.out.println(p_pass);
+//		Compte cp = compteRepository.findCompte(p_email,p_pass);
+//		if(cp!=null) {
+//			return true;
+//		}else {
+//			return false;
+//		}	
+//	}
 	
 	
 	
@@ -68,10 +68,18 @@ public class CreditCardService {
 		
 		
 		JSONObject jsonObj;
+		char test = member.charAt(0);
 		try {
-			jsonObj = new JSONObject(paramJson(member));
-			String name = jsonObj.getString("Nom");
-			System.out.println("Tbag : "+name);
+			if(test=='{') {
+				jsonObj = new JSONObject(member);
+				String name = jsonObj.getString("Title");
+				System.out.println("Tbag : "+name);
+			}else {
+				jsonObj = new JSONObject(paramJson(member));
+				String name = jsonObj.getString("Nom");
+				System.out.println("Tbag : "+name);
+			}
+			
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -94,12 +102,50 @@ public class CreditCardService {
 	    for (String param : params) {           
 	       System.out.println(param.split("=")[0]+" : "+param.split("=")[1]);
 	    }*/
-		System.out.println("==================================================");
+		System.out.println("====================Authentification===========================");
 		System.out.println("Json Paquet : "+member);
 		System.out.println("Votre Adresse IP : "+request.getRemoteAddr());
 		System.out.println("Votre Session : "+request.getSession().getId());
-		System.out.println("==================================================");
-	    return true;
+		System.out.println("===============================================================");
+		
+		JSONObject jsonObj;
+		char test = member.charAt(0);
+		boolean res = false;
+		try {
+			if(test=='{') {
+				jsonObj = new JSONObject(member);
+				Compte cp = compteRepository.findCompte(jsonObj.getString("login"),jsonObj.getString("pass"));
+				if(cp!=null) {
+					res = true;
+				}else {
+					res = false;
+				}	
+			}else {
+				jsonObj = new JSONObject(paramJson(member));				
+				Compte cp = compteRepository.findCompte(jsonObj.getString("login"),jsonObj.getString("pass"));
+				if(cp!=null) {
+					res = true;
+				}else {
+					res = false;
+				}	
+			}
+			
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return res;
 	}
-
+	
+	@Produces(MediaType.APPLICATION_JSON)
+	@RequestMapping(path ="/getCompte/{p_email}", method = RequestMethod.GET)
+	public Compte getCompte(@PathVariable String p_email) {	
+		System.out.println(p_email);
+		Compte cp = compteRepository.findCompteEmail(p_email);
+		if(cp!=null) {
+			return cp;
+		}else {
+			return null;
+		}
+	}
 }
