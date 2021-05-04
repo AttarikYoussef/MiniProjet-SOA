@@ -7,11 +7,14 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class CreditCard {
 	@Id
 	Long nCard;
 	@OneToOne@JoinColumn
+	@JsonIgnore
 	Compte id_C;
 	Date dateExpiration;
 	public CreditCard(Long nCard, Compte id_C, Date dateExpiration) {
@@ -21,6 +24,16 @@ public class CreditCard {
 		this.dateExpiration = dateExpiration;
 	}
 	
+	
+	
+	public CreditCard(Long nCard, Compte id_C) {
+		super();
+		this.nCard = nCard;
+		this.id_C = id_C;
+	}
+
+
+
 	public CreditCard() {
 		super();
 	}

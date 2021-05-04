@@ -1,5 +1,9 @@
 package com.example.demo.Repository;
 
-public interface HistoriqueRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.example.demo.Entity.Historique;
+
+public interface HistoriqueRepository extends JpaRepository<Historique, Long> {
 
 }

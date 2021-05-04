@@ -13,4 +13,10 @@ public interface CompteRepository extends JpaRepository<Compte,Long> {
 	
 	@Query("SELECT c FROM Compte c WHERE c.email_C = :em")
 	public Compte findCompteEmail(@Param("em")String email);
+	
+	@Query(
+			  value = "SELECT * FROM Compte c WHERE c.email_C = :em", 
+			  nativeQuery = true)
+	public Compte findNative(@Param("em")String email);
+
 }

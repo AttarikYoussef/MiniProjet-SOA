@@ -4,10 +4,14 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 public class Compte {
@@ -19,8 +23,10 @@ public class Compte {
 	String email_C;
 	String password_C;
 	@OneToMany (mappedBy = "id_C")
+	
 	List<Historique> historiques;
-	@OneToOne (mappedBy = "id_C")
+	@OneToOne (mappedBy = "id_C" )
+	
 	CreditCard creditCard;
 	
 	public Compte(String nom_C, String prenom_C, String email_C, String password_C) {
@@ -95,11 +101,18 @@ public class Compte {
 		this.creditCard = creditCard;
 	}
 
+
+
 	@Override
 	public String toString() {
 		return "Compte [id_C=" + id_C + ", nom_C=" + nom_C + ", prenom_C=" + prenom_C + ", email_C=" + email_C
 				+ ", password_C=" + password_C + "]";
 	}
+
+
+	
+
+	
 	
 	
 

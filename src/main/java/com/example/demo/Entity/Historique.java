@@ -8,12 +8,15 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Historique {
 	@Id
 	@GeneratedValue
 	Long id_Historique;
 	@ManyToOne@JoinColumn
+	@JsonIgnore
 	Compte id_C;
 	Date date_Action;
 	String service_Consomme;
@@ -24,8 +27,20 @@ public class Historique {
 		this.date_Action = date_Action;
 		this.service_Consomme = service_Consomme;
 	}
+	
+	
 
 	
+	public Historique(Long id_Historique, Compte id_C, String service_Consomme) {
+		super();
+		this.id_Historique = id_Historique;
+		this.id_C = id_C;
+		this.service_Consomme = service_Consomme;
+	}
+
+
+
+
 	public Historique() {
 		super();
 	}

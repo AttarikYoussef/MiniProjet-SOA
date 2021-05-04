@@ -143,6 +143,7 @@ public class CreditCardService {
 		System.out.println(p_email);
 		Compte cp = compteRepository.findCompteEmail(p_email);
 		if(cp!=null) {
+			System.out.println(cp);
 			return cp;
 		}else {
 			return null;
