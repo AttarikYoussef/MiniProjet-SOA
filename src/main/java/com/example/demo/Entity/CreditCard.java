@@ -16,8 +16,8 @@ public class CreditCard {
 	@OneToOne@JoinColumn
 	@JsonIgnore
 	Compte id_C;
-	Date dateExpiration;
-	public CreditCard(Long nCard, Compte id_C, Date dateExpiration) {
+	String dateExpiration;
+	public CreditCard(Long nCard, Compte id_C, String dateExpiration) {
 		super();
 		this.nCard = nCard;
 		this.id_C = id_C;
@@ -50,10 +50,10 @@ public class CreditCard {
 	public void setId_C(Compte id_C) {
 		this.id_C = id_C;
 	}
-	public Date getDateExpiration() {
+	public String getDateExpiration() {
 		return dateExpiration;
 	}
-	public void setDateExpiration(Date dateExpiration) {
+	public void setDateExpiration(String dateExpiration) {
 		this.dateExpiration = dateExpiration;
 	}
 	@Override

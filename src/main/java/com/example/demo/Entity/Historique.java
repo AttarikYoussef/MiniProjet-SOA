@@ -18,10 +18,10 @@ public class Historique {
 	@ManyToOne@JoinColumn
 	@JsonIgnore
 	Compte id_C;
-	Date date_Action;
+	String date_Action;
 	String service_Consomme;
 	
-	public Historique(Compte id_C, Date date_Action, String service_Consomme) {
+	public Historique(Compte id_C, String date_Action, String service_Consomme) {
 		super();
 		this.id_C = id_C;
 		this.date_Action = date_Action;
@@ -62,11 +62,11 @@ public class Historique {
 		this.id_C = id_C;
 	}
 
-	public Date getDate_Action() {
+	public String getDate_Action() {
 		return date_Action;
 	}
 
-	public void setDate_Action(Date date_Action) {
+	public void setDate_Action(String date_Action) {
 		this.date_Action = date_Action;
 	}
 
